@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS  # Import CORS module
+from flask_cors import CORS
 import util
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
+
+@app.route('/')
+def home():
+    return "Flask server is up and running!"
 
 @app.route('/get_location_names')
 def get_location_names():
@@ -24,7 +28,6 @@ def predict_home_price():
     response = jsonify({
         'estimated_price': estimated_price
     })
-
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
@@ -32,4 +35,4 @@ def predict_home_price():
 if __name__ == "__main__":
     print("Starting Python Flask Server For Home Price Prediction...")
     util.load_saved_artifacts()
-    app.run(host='0.0.0.0', port=5000)  # Update to allow external access
+    app.run(host='0.0.0.0', port=5000)
